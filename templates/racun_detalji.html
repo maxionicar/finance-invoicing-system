@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Detalji računa</h2>
+
+
+<div id="racunInfo" class="card mb-3">
+    <div class="card-body">Učitavanje...</div>
+</div>
+
+
+<div class="card mb-3">
+    <div class="card-body">
+        <form id="stavkaForm" class="row">
+            <div class="col-5">
+                <input type="text" id="opis" class="form-control" placeholder="Opis" required>
+            </div>
+            <div class="col-2">
+                <input type="number" id="kolicina" class="form-control" placeholder="Kol" value="1" required>
+            </div>
+            <div class="col-3">
+                <input type="number" id="cijena" class="form-control" placeholder="Cijena" step="0.01" required>
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-primary w-100">Dodaj</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Opis</th>
+            <th>Količina</th>
+            <th>Cijena</th>
+            <th>Ukupno</th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody id="stavkeBody"></tbody>
+</table>
+
+<script>
+const racunId = {{ racun_id }};
+
+function loadRacunDetalji() {
+    $.get('/api/racuni', function(racuni) {
+        let r = racuni.find(x => x.id === racunId);
+        if (r) {
+            $('#racunInfo').html(`
+                <strong>Broj:</strong> ${r.broj} | 
+                <strong>Datum:</strong> ${new Date(r.datum).toLocaleDateString()} | 
+                <strong>Klijent:</strong> ${r.klijent} | 
+                <strong>Iznos:</strong> ${r.ukupno} € | 
+                <strong>Status:</strong> ${r.status === 'plaćeno' ? '✅' : '❌'}
+                <button class="btn btn-sm btn-warning" onclick="promijeniStatus(${r.id}, '${r.status}')">Promijeni status</button>
+            `);
+            loadStavke();
+        }
+    });
+}
+
+function loadStavke() {
+    $.get(`/api/racuni/${racunId}/stavke`, function(data) {
+        let html = '';
+        let ukupno = 0;
+        data.forEach(s => {
+            ukupno += s.ukupno;
+            html += `<tr>
+                <td>${s.opis}</td>
+                <td>${s.kolicina}</td>
+                <td>${s.cijena} €</td>
+                <td>${s.ukupno} €</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" onclick="obrisiStavku(${s.id})">Obriši</button>
+                </td>
+            </tr>`;
+        });
+        html += `<tr class="table-success">
+            <td colspan="3"><strong>UKUPNO</strong></td>
+            <td><strong>${ukupno.toFixed(2)} €</strong></td>
+            <td></td>
+        </tr>`;
+        $('#stavkeBody').html(html || '<tr><td colspan="5">Nema stavki</td></tr>');
+    });
+}
+
+
+$('#stavkaForm').submit(function(e) {
+    e.preventDefault();
+    $.ajax({
+        url: `/api/racuni/${racunId}/stavke`,
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            opis: $('#opis').val(),
+            kolicina: parseInt($('#kolicina').val()),
+            cijena: parseFloat($('#cijena').val())
+        }),
+        success: function() {
+            alert('Stavka dodana!');
+            $('#stavkaForm')[0].reset();
+            loadRacunDetalji();
+        }
+    });
+});
+
+
+function obrisiStavku(id) {
+    if (confirm('Obriši stavku?')) {
+        $.ajax({
+            url: `/api/stavke/${id}`,
+            type: 'DELETE',
+            success: function() {
+                alert('Obrisano!');
+                loadRacunDetalji();
+            }
+        });
+    }
+}
+
+
+function promijeniStatus(id, trenutni) {
+    let novi = trenutni === 'plaćeno' ? 'neplaćeno' : 'plaćeno';
+    $.ajax({
+        url: `/api/racuni/${id}`,
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify({ status: novi }),
+        success: function() {
+            alert('Status promijenjen!');
+            loadRacunDetalji();
+        }
+    });
+}
+
+$(document).ready(function() {
+    loadRacunDetalji();
+});
+</script>
+{% endblock %}

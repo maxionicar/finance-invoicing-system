@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Klijenti</h2>
+
+
+<div class="card mb-3">
+    <div class="card-body">
+        <form id="klijentForm">
+            <div class="row">
+                <div class="col-3">
+                    <input type="text" id="naziv" class="form-control" placeholder="Naziv" required>
+                </div>
+                <div class="col-2">
+                    <input type="text" id="oib" class="form-control" placeholder="OIB" maxlength="11" required>
+                </div>
+                <div class="col-3">
+                    <input type="text" id="adresa" class="form-control" placeholder="Adresa" required>
+                </div>
+                <div class="col-2">
+                    <input type="text" id="kontakt" class="form-control" placeholder="Kontakt" required>
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-primary w-100">Dodaj</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Naziv</th>
+            <th>OIB</th>
+            <th>Adresa</th>
+            <th>Kontakt</th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody id="klijentiBody"></tbody>
+</table>
+
+<script>
+function loadKlijenti() {
+    $.get('/api/klijenti', function(data) {
+        let html = '';
+        data.forEach(k => {
+            html += `<tr>
+                <td>${k.id}</td>
+                <td>${k.naziv}</td>
+                <td>${k.oib}</td>
+                <td>${k.adresa}</td>
+                <td>${k.kontakt}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" onclick="deleteKlijent(${k.id})">Obriši</button>
+                </td>
+            </tr>`;
+        });
+        $('#klijentiBody').html(html || '<tr><td colspan="6">Nema klijenata</td></tr>');
+    });
+}
+
+
+$('#klijentForm').submit(function(e) {
+    e.preventDefault();
+    $.ajax({
+        url: '/api/klijenti',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            naziv: $('#naziv').val(),
+            oib: $('#oib').val(),
+            adresa: $('#adresa').val(),
+            kontakt: $('#kontakt').val(),
+            email: 'test@test.com'
+        }),
+        success: function() {
+            alert('Dodano!');
+            $('#klijentForm')[0].reset();
+            loadKlijenti();
+        }
+    });
+});
+
+// Obriši klijenta
+function deleteKlijent(id) {
+    if (confirm('Obriši?')) {
+        $.ajax({
+            url: `/api/klijenti/${id}`,
+            type: 'DELETE',
+            success: function() {
+                alert('Obrisano!');
+                loadKlijenti();
+            }
+        });
+    }
+}
+
+$(document).ready(function() {
+    loadKlijenti();
+});
+</script>
+{% endblock %}

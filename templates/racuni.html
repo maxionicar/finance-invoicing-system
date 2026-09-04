@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Računi</h2>
+
+
+<div class="card mb-3">
+    <div class="card-body">
+        <form id="racunForm" class="row">
+            <div class="col-6">
+                <select id="klijentSelect" class="form-select" required>
+                    <option value="">Odaberite klijenta...</option>
+                </select>
+            </div>
+            <div class="col-6">
+                <button type="submit" class="btn btn-success w-100">Kreiraj račun</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Broj</th>
+            <th>Datum</th>
+            <th>Klijent</th>
+            <th>Iznos</th>
+            <th>Status</th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody id="racuniBody"></tbody>
+</table>
+
+<script>
+function loadKlijentiDropdown() {
+    $.get('/api/klijenti', function(data) {
+        let options = '<option value="">Odaberite...</option>';
+        data.forEach(k => {
+            options += `<option value="${k.id}">${k.naziv}</option>`;
+        });
+        $('#klijentSelect').html(options);
+    });
+}
+
+function loadRacuni() {
+    $.get('/api/racuni', function(data) {
+        let html = '';
+        data.forEach(r => {
+            let status = r.status === 'plaćeno' ? '✅' : '❌';
+            html += `<tr>
+                <td><a href="/racuni/${r.id}">${r.broj}</a></td>
+                <td>${new Date(r.datum).toLocaleDateString()}</td>
+                <td>${r.klijent}</td>
+                <td>${r.ukupno} €</td>
+                <td>${status}</td>
+                <td>
+                    <button class="btn btn-success btn-sm" onclick="promijeniStatus(${r.id}, '${r.status}')">Status</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteRacun(${r.id})">Obriši</button>
+                </td>
+            </tr>`;
+        });
+        $('#racuniBody').html(html || '<tr><td colspan="6">Nema računa</td></tr>');
+    });
+}
+
+
+$('#racunForm').submit(function(e) {
+    e.preventDefault();
+    $.ajax({
+        url: '/api/racuni',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            klijent_id: parseInt($('#klijentSelect').val())
+        }),
+        success: function(data) {
+            alert(`Račun ${data.broj} kreiran!`);
+            loadRacuni();
+            loadKlijentiDropdown();
+        }
+    });
+});
+
+
+function promijeniStatus(id, trenutni) {
+    let novi = trenutni === 'plaćeno' ? 'neplaćeno' : 'plaćeno';
+    $.ajax({
+        url: `/api/racuni/${id}`,
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify({ status: novi }),
+        success: function() {
+            alert('Status promijenjen!');
+            loadRacuni();
+        }
+    });
+}
+
+function deleteRacun(id) {
+    if (confirm('Obriši račun?')) {
+        $.ajax({
+            url: `/api/racuni/${id}`,
+            type: 'DELETE',
+            success: function() {
+                alert('Obrisano!');
+                loadRacuni();
+            }
+        });
+    }
+}
+
+$(document).ready(function() {
+    loadKlijentiDropdown();
+    loadRacuni();
+});
+</script>
+{% endblock %}

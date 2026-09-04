@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Neplaćeni računi</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Broj</th>
+            <th>Datum</th>
+            <th>Klijent</th>
+            <th>Iznos</th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody id="neplaceniBody"></tbody>
+</table>
+
+<div id="ukupnoNeplaceno" class="mt-3">
+    <h4>Ukupno: 0 €</h4>
+</div>
+
+<script>
+function loadNeplaceni() {
+    $.get('/api/statistika/neplaceni', function(data) {
+        let html = '';
+        let ukupno = 0;
+        data.forEach(r => {
+            ukupno += r.ukupno;
+            html += `<tr>
+                <td><a href="/racuni/${r.id}">${r.broj}</a></td>
+                <td>${new Date(r.datum).toLocaleDateString()}</td>
+                <td>${r.klijent}</td>
+                <td>${r.ukupno} €</td>
+                <td>
+                    <button class="btn btn-success btn-sm" onclick="platiRacun(${r.id})">Plati</button>
+                </td>
+            </tr>`;
+        });
+        $('#neplaceniBody').html(html || '<tr><td colspan="5">Sve je plaćeno! 🎉</td></tr>');
+        $('#ukupnoNeplaceno').html(`<h4>Ukupno: ${ukupno.toFixed(2)} €</h4>`);
+    });
+}
+
+function platiRacun(id) {
+    if (confirm('Označiti kao plaćeno?')) {
+        $.ajax({
+            url: `/api/racuni/${id}`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify({ status: 'plaćeno' }),
+            success: function() {
+                alert('Plaćeno! ');
+                loadNeplaceni();
+            }
+        });
+    }
+}
+
+$(document).ready(function() {
+    loadNeplaceni();
+});
+</script>
+{% endblock %}

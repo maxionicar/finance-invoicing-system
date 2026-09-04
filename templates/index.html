@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Dashboard</h2>
+
+<div class="row">
+    <div class="col-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5>Računa</h5>
+                <h2 id="brojRacuna">0</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5>Prihod</h5>
+                <h2 id="ukupniPrihod">0 €</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card bg-danger text-white">
+            <div class="card-body">
+                <h5>Neplaćeno</h5>
+                <h2 id="neplaceno">0 €</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5>Klijenata</h5>
+                <h2 id="brojKlijenata">0</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="mt-4">
+    <button class="btn btn-warning" onclick="dodajTestPodatke()">
+        Dodaj test podatke
+    </button>
+</div>
+
+
+<div class="mt-4">
+    <h5>Zadnjih 5 računa</h5>
+    <div id="zadnjiRacuni">Nema računa</div>
+</div>
+
+<script>
+
+function loadDashboard() {
+    $.get('/api/statistika/dashboard', function(data) {
+        $('#brojRacuna').text(data.broj_racuna);
+        $('#ukupniPrihod').text(data.ukupni_prihod.toFixed(2) + ' €');
+        $('#neplaceno').text(data.neplaceno.toFixed(2) + ' €');
+        $('#brojKlijenata').text(data.broj_klijenata);
+    });
+    
+    $.get('/api/racuni', function(data) {
+        let html = '<ul>';
+        data.slice(0, 5).forEach(r => {
+            let status = r.status === 'plaćeno' ? '✅' : '❌';
+            html += `<li>${r.broj} - ${r.klijent} - ${r.ukupno}€ ${status}</li>`;
+        });
+        html += '</ul>';
+        $('#zadnjiRacuni').html(html || 'Nema računa');
+    });
+}
+
+
+function dodajTestPodatke() {
+    if (confirm('Dodati test podatke?')) {
+        $.post('/api/seed', function() {
+            alert('Test podaci dodani!');
+            loadDashboard();
+        });
+    }
+}
+
+
+$(document).ready(function() {
+    loadDashboard();
+});
+</script>
+{% endblock %}

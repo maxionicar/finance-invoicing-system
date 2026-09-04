@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Statistika</h2>
+
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <h5>Mjesečni prihodi</h5>
+                <canvas id="monthlyChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <h5>Omjer plaćenih/neplaćenih</h5>
+                <canvas id="statusChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5>Top 5 klijenata</h5>
+                <canvas id="topClientsChart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    
+    $.get('/api/statistika/mjesecna', function(data) {
+        new Chart(document.getElementById('monthlyChart'), {
+            type: 'bar',
+            data: {
+                labels: data.mjeseci,
+                datasets: [{
+                    label: 'Prihod (€)',
+                    data: data.iznosi,
+                    backgroundColor: 'blue'
+                }]
+            }
+        });
+    });
+
+    
+    $.get('/api/statistika/status', function(data) {
+        new Chart(document.getElementById('statusChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Plaćeno', 'Neplaćeno'],
+                datasets: [{
+                    data: [data.placeno, data.neplaceno],
+                    backgroundColor: ['green', 'red']
+                }]
+            }
+        });
+    });
+
+    
+    $.get('/api/statistika/top_klijenti', function(data) {
+        new Chart(document.getElementById('topClientsChart'), {
+            type: 'bar',
+            data: {
+                labels: data.klijenti,
+                datasets: [{
+                    label: 'Promet (€)',
+                    data: data.iznosi,
+                    backgroundColor: 'orange'
+                }]
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

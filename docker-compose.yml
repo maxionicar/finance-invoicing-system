@@ -1,0 +1,9 @@
+ssversion: '3.8'
+
+services:
+  finance-app:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./database.sqlite:/app/database.sqlite
