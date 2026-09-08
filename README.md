@@ -1,10 +1,12 @@
-Naziv projekta:
+# Naziv projekta:
 Sustav za upravljanje računima i financijama
 
-Opis projekta:
+
+# Opis projekta:
 Web aplikacija za upravljanje poslovnim računima
 
-Mogućnosti aplikacije:
+Mogućnosti aplikacije:  
+
 - Upravljanje klijentima 
 - Upravljanje računima 
 - Upravljanje stavkama računa
@@ -13,7 +15,7 @@ Mogućnosti aplikacije:
 - Pregled neplaćenih računa
 
 
-Korištene tehnologije:
+# Korištene tehnologije:
 - Python 3.9 -- Programski jezik
 - Flask -- Web framework
 - PonyORM -- ORM za bazu podataka
@@ -22,7 +24,7 @@ Korištene tehnologije:
 - Chart.js -- Grafikoni
 - Docker -- Kontejnerizacija
 
-Pokretanje aplikacije
+# Pokretanje aplikacije
 
 Postoji više opcija pokretanja:
 -Lokalno
@@ -35,14 +37,14 @@ Postoji više opcija pokretanja:
     docker-compose up --build
 
 
-Testni podaci
+# Testni podaci
 
 Nakon pokretanja, na dashboardu kliknite "Dodaj test podatke" za dodavanje:
 - 3 klijenta
 - 4 računa
 - Stavke na račune
 
-Struktura projekta
+# Struktura projekta
 
 finance-invoicing-system/
     app/ #Backend
@@ -64,7 +66,7 @@ finance-invoicing-system/
     docker-compose.yml #Docker kompozicija
     README.md #Dokumentacija
 
-API Endpointovi
+# API Endpointovi
 
 Klijenti
 -GET	    Dohvat svih klijenata
@@ -78,7 +80,7 @@ Računi
 -DELETE  Brisanje stavke
 
 Statistika
--GET     Podaci za dashbpoard
+-GET     Podaci za dashbboard
 -GET     Mjesecni prihod(Dijagram)
 -GET     Omjer plaćenih/neplaćenih(Dijagram)
 -GET     Top 5 klijenata(Dijagram)
@@ -96,12 +98,12 @@ Omjer plaćenih/neplaćenih -- pie chart -- Uio plaćenih i neplaćenih
 Treći dijagram:
 Top 5 klijenata -- Bar chart -- 5 klijenata s najvećim prihodom
 
-Use Case Dijagram
+# Use Case Dijagram
 
 Akteri:
 -Radnik - Upravlja svim podacima u sustavu
 
-Funkcionalnost:
+# Funkcionalnost:
 -Upravljanje klijentima -- Dodavanje, uređivanje, pregled i brisanje klijenata
 -Upravljanje računima -- Kreiranje, pregled, uređivanje i brisanje računa 
 -Pregled statistike --  Prikaz grafikona: mjesečni prihodi, omjer plaćenih/neplaćenih, top 5 klijenata
