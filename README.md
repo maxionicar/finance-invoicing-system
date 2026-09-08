@@ -57,7 +57,7 @@ finance-invoicing-system/
 │
 ├── app/                          # Backend
 │   ├── __init__.py
-│   ├── models.py                 # Baza podataka
+│   ├── models.py                 # Baza podataka (PonyORM)
 │   ├── routes.py                 # API rute
 │   └── seed.py                   # Test podaci
 │
@@ -69,17 +69,6 @@ finance-invoicing-system/
 │   ├── racun_detalji.html        # Detalji računa
 │   ├── statistika.html           # Grafikoni (Chart.js)
 │   └── neplaceni.html            # Neplaćeni računi
-│
-├── static/                       # Statičke datoteke
-│   ├── css/                      # (prazno - Bootstrap CDN)
-│   └── js/                       # (prazno - JS u HTML-u)
-│
-├── images/                       # Slike za dokumentaciju
-│   └── use-case.png              # Use Case dijagram
-│
-├── screenshots/                  # Screenshotovi aplikacije
-│   ├── dashboard.png
-│   └── statistika.png
 │
 ├── app.py                        # Glavna aplikacija
 ├── requirements.txt              # Python paketi
