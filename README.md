@@ -52,6 +52,7 @@ Nakon pokretanja, na dashboardu kliknite "Dodaj test podatke" za dodavanje:
 
 # Struktura projekta
 
+```
 finance-invoicing-system/
 │
 ├── app/                          # Backend
@@ -85,6 +86,7 @@ finance-invoicing-system/
 ├── Dockerfile                    # Docker konfiguracija
 ├── docker-compose.yml            # Docker Compose
 └── README.md                     # Dokumentacija
+```
 
 # API Endpointovi
 

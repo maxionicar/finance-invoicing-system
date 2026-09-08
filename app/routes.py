@@ -176,7 +176,7 @@ def register_routes(app):
         racun.izracunaj_ukupno()
         return jsonify({'message': 'Stavka obrisana!'})
     
-    # ============ SPECIFIČNE FUNKCIJE - STATISTIKA ============
+    
     @app.route('/api/statistika/dashboard', methods=['GET'])
     @db_session
     def dashboard_stats():
@@ -249,10 +249,8 @@ def register_routes(app):
         try:
             from app.seed import seed
             seed()
-            print("Seed uspješno izvršen!")
             return jsonify({'message': 'Test podaci dodani!'})
         except Exception as e:
-            print(f" GREŠKA U SEED: {e}")
             import traceback
             traceback.print_exc()
             return jsonify({'error': str(e)}), 500

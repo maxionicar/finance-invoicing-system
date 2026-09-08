@@ -5,14 +5,14 @@ from datetime import datetime, timedelta
 
 def seed():
     with db_session:
-        # Provjera ima li već podataka
+        
         if select(k for k in Klijent).count() > 0:
-            print("ℹ️ Baza već ima podataka")
+            print("ℹ Baza već ima podataka")
             return
         
-        print("📥 Dodajem testne podatke...")
         
-        # KLIJENTI
+        
+        
         k1 = Klijent(
             naziv="IT Solutions d.o.o.",
             oib="12345678901",
@@ -37,7 +37,7 @@ def seed():
             email="iva@knjiznica.hr"
         )
 
-        # RAČUNI
+        
         r1 = Racun(
             broj="R-2026-001",
             datum=datetime.now() - timedelta(days=30),
@@ -70,7 +70,7 @@ def seed():
             status="neplaćeno"
         )
 
-        # STAVKE
+        
         StavkaRacuna(racun=r1, opis="Web hosting - godišnji", kolicina=1, cijena=1000.00)
         StavkaRacuna(racun=r1, opis="Konzultacije - 5h", kolicina=5, cijena=50.00)
         StavkaRacuna(racun=r2, opis="SEO optimizacija", kolicina=1, cijena=750.00)
