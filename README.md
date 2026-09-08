@@ -52,30 +52,39 @@ Nakon pokretanja, na dashboardu kliknite "Dodaj test podatke" za dodavanje:
 
 # Struktura projekta
 
-finance-invoicing-system/  
-
-    app/ #Backend  
-
-        init.py  
-
-        models.py #Baza podataka  
-
-        routes.py #API rute  
-        
-        seed.py #Test podaci
-    templates/ #HTML predlošci
-        base.html #osnovni preložak
-        index.html #Dashboard
-        klijenti.html #Klijenti
-        racuni.html #Računi
-        racun_detalji.html #Detalji računa
-        statistika.html #Grafikoni
-        neplaceni.html #Neplaćeni računi
-    app.py #Glavna aplikacija
-    requirements.txt #Python paketi
-    Dockerfile #Docker konfiguracija
-    docker-compose.yml #Docker kompozicija
-    README.md #Dokumentacija
+finance-invoicing-system/
+│
+├── app/                          # Backend
+│   ├── __init__.py
+│   ├── models.py                 # Baza podataka
+│   ├── routes.py                 # API rute
+│   └── seed.py                   # Test podaci
+│
+├── templates/                    # HTML predlošci
+│   ├── base.html                 # Osnovni predložak
+│   ├── index.html                # Dashboard
+│   ├── klijenti.html             # Klijenti
+│   ├── racuni.html               # Računi
+│   ├── racun_detalji.html        # Detalji računa
+│   ├── statistika.html           # Grafikoni (Chart.js)
+│   └── neplaceni.html            # Neplaćeni računi
+│
+├── static/                       # Statičke datoteke
+│   ├── css/                      # (prazno - Bootstrap CDN)
+│   └── js/                       # (prazno - JS u HTML-u)
+│
+├── images/                       # Slike za dokumentaciju
+│   └── use-case.png              # Use Case dijagram
+│
+├── screenshots/                  # Screenshotovi aplikacije
+│   ├── dashboard.png
+│   └── statistika.png
+│
+├── app.py                        # Glavna aplikacija
+├── requirements.txt              # Python paketi
+├── Dockerfile                    # Docker konfiguracija
+├── docker-compose.yml            # Docker Compose
+└── README.md                     # Dokumentacija
 
 # API Endpointovi
 
