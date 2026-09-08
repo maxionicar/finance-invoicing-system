@@ -68,44 +68,53 @@ finance-invoicing-system/
 
 # API Endpointovi
 
-Klijenti
--GET	    Dohvat svih klijenata
--POST    Dodavanje klijenta
--PUT	    Ažuriranje klijenta
--DELETE	Brisanje klijenta
+## Klijenti  
 
-Računi
+-GET	    Dohvat svih klijenata  
+
+-POST    Dodavanje klijenta  
+
+-PUT	    Ažuriranje klijenta  
+
+-DELETE	Brisanje klijenta  
+
+
+## Računi
 -GET     Dohvat stavki
 -POST    Dodavanje stavke
 -DELETE  Brisanje stavke
 
-Statistika
+## Statistika
 -GET     Podaci za dashbboard
 -GET     Mjesecni prihod(Dijagram)
 -GET     Omjer plaćenih/neplaćenih(Dijagram)
 -GET     Top 5 klijenata(Dijagram)
 -GET     Lista neplaćenih
 
-Grafikoni
+# Grafikoni
 -svi grafikoni se prikazuju na stranici /statistika
 
-Prvi grafikon:
+## Prvi grafikon:
 -Mjesečni prihodi -- bar chart -- prihodi po mjesecima
 
-Drugi grafikon:
+## Drugi grafikon:
 Omjer plaćenih/neplaćenih -- pie chart -- Uio plaćenih i neplaćenih
 
-Treći dijagram:
+## Treći dijagram:
 Top 5 klijenata -- Bar chart -- 5 klijenata s najvećim prihodom
 
 # Use Case Dijagram
 
-Akteri:
+## Akter:
 -Radnik - Upravlja svim podacima u sustavu
 
 # Funkcionalnost:
--Upravljanje klijentima -- Dodavanje, uređivanje, pregled i brisanje klijenata
--Upravljanje računima -- Kreiranje, pregled, uređivanje i brisanje računa 
--Pregled statistike --  Prikaz grafikona: mjesečni prihodi, omjer plaćenih/neplaćenih, top 5 klijenata
--Pregled neplaćenig računa -- Lista svih neplaćenih računa s ukupnim iznosom
--Pretraga računa --  Pretraga računa po broju ili klijentu
+-Upravljanje klijentima -- Dodavanje, uređivanje, pregled i brisanje klijenata  
+
+-Upravljanje računima -- Kreiranje, pregled, uređivanje i brisanje računa   
+
+-Pregled statistike --  Prikaz grafikona: mjesečni prihodi, omjer plaćenih/neplaćenih, top 5 klijenata  
+
+-Pregled neplaćenig računa -- Lista svih neplaćenih računa s ukupnim iznosom  
+
+-Pretraga računa --  Pretraga računa po broju ili klijentu  
