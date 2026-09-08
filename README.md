@@ -26,14 +26,20 @@ Mogućnosti aplikacije:
 
 # Pokretanje aplikacije
 
-Postoji više opcija pokretanja:
--Lokalno
+Postoji više opcija pokretanja:  
+
+-Lokalno  
+
     pip install -r requirements.txt
-    python app.py
--Docker
+    python app.py  
+
+-Docker  
+
     docker build -t finance-app .
-    docker run -p 5000:5000 finance-app
--Docker Compose
+    docker run -p 5000:5000 finance-app  
+
+-Docker Compose  
+
     docker-compose up --build
 
 
@@ -80,22 +86,30 @@ finance-invoicing-system/
 
 
 ## Računi
--GET     Dohvat stavki
--POST    Dodavanje stavke
--DELETE  Brisanje stavke
+-GET     Dohvat stavki  
+
+-POST    Dodavanje stavke  
+
+-DELETE  Brisanje stavke  
+
 
 ## Statistika
--GET     Podaci za dashbboard
--GET     Mjesecni prihod(Dijagram)
--GET     Omjer plaćenih/neplaćenih(Dijagram)
--GET     Top 5 klijenata(Dijagram)
--GET     Lista neplaćenih
+-GET     Podaci za dashbboard  
+
+-GET     Mjesecni prihod(Dijagram)  
+
+-GET     Omjer plaćenih/neplaćenih(Dijagram)  
+
+-GET     Top 5 klijenata(Dijagram)  
+
+-GET     Lista neplaćenih  
+
 
 # Grafikoni
 -svi grafikoni se prikazuju na stranici /statistika
 
 ## Prvi grafikon:
--Mjesečni prihodi -- bar chart -- prihodi po mjesecima
+Mjesečni prihodi -- bar chart -- prihodi po mjesecima
 
 ## Drugi grafikon:
 Omjer plaćenih/neplaćenih -- pie chart -- Uio plaćenih i neplaćenih
@@ -106,15 +120,15 @@ Top 5 klijenata -- Bar chart -- 5 klijenata s najvećim prihodom
 # Use Case Dijagram
 
 ## Akter:
--Radnik - Upravlja svim podacima u sustavu
+Radnik - Upravlja svim podacima u sustavu
 
 # Funkcionalnost:
--Upravljanje klijentima -- Dodavanje, uređivanje, pregled i brisanje klijenata  
+Upravljanje klijentima -- Dodavanje, uređivanje, pregled i brisanje klijenata  
 
--Upravljanje računima -- Kreiranje, pregled, uređivanje i brisanje računa   
+Upravljanje računima -- Kreiranje, pregled, uređivanje i brisanje računa   
 
--Pregled statistike --  Prikaz grafikona: mjesečni prihodi, omjer plaćenih/neplaćenih, top 5 klijenata  
+Pregled statistike --  Prikaz grafikona: mjesečni prihodi, omjer plaćenih/neplaćenih, top 5 klijenata  
 
--Pregled neplaćenig računa -- Lista svih neplaćenih računa s ukupnim iznosom  
+Pregled neplaćenig računa -- Lista svih neplaćenih računa s ukupnim iznosom  
 
--Pretraga računa --  Pretraga računa po broju ili klijentu  
+Pretraga računa --  Pretraga računa po broju ili klijentu  
