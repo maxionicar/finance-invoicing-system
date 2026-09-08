@@ -52,11 +52,16 @@ Nakon pokretanja, na dashboardu kliknite "Dodaj test podatke" za dodavanje:
 
 # Struktura projekta
 
-finance-invoicing-system/
-    app/ #Backend
-        init.py
-        models.py #Baza podataka
-        routes.py #API rute
+finance-invoicing-system/  
+
+    app/ #Backend  
+
+        init.py  
+
+        models.py #Baza podataka  
+
+        routes.py #API rute  
+        
         seed.py #Test podaci
     templates/ #HTML predlošci
         base.html #osnovni preložak
