@@ -161,6 +161,9 @@ def register_routes(app):
             kolicina=data['kolicina'],
             cijena=data['cijena']
         )
+
+        commit()
+
         racun.izracunaj_ukupno()
         return jsonify({'id': stavka.id, 'message': 'Stavka dodana!'}), 201
     
@@ -241,7 +244,15 @@ def register_routes(app):
         } for r in racuni])
     
     @app.route('/api/seed', methods=['POST'])
+    @db_session
     def seed_database():
-        from app.seed import seed
-        seed()
-        return jsonify({'message': 'Test podaci dodani!'})
+        try:
+            from app.seed import seed
+            seed()
+            print("Seed uspješno izvršen!")
+            return jsonify({'message': 'Test podaci dodani!'})
+        except Exception as e:
+            print(f" GREŠKA U SEED: {e}")
+            import traceback
+            traceback.print_exc()
+            return jsonify({'error': str(e)}), 500
